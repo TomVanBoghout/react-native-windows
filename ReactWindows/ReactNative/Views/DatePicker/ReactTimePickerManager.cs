@@ -67,6 +67,7 @@ namespace ReactNative.Views.DatePicker
         protected override TimePicker CreateViewInstance(ThemedReactContext reactContext)
         {
             TimePicker picker = new TimePicker();
+            picker.ClockIdentifier = "24HourClock";
             return picker;
         }
 
