@@ -11,21 +11,28 @@
  */
 'use strict';
 
+var PropTypes = require('prop-types');
 var React = require('React');
 var View = require('View');
 var requireNativeComponent = require('requireNativeComponent');
+var RCTTimePicker = requireNativeComponent('RCTTimePicker', TimePickerWindows);
+var ViewPropTypes = require('ViewPropTypes');
 
 var ReactNative = require("react-native");
 
-var TimePickerWindows = React.createClass({
-  name: 'TimePickerWindows',
-  propTypes: {
-    ...View.PropTypes,
+class TimePickerWindows extends React.Component {
+  props: {
+    date: Date,
+    onChange?: Function,
+  };
+
+  static proptypes = {
+    ...ViewPropTypes,
     ...ReactNative.ViewPropTypes,
     /**
      * The currently selected date.
      */
-    date: React.PropTypes.instanceOf(Date),
+    date: PropTypes.instanceOf(Date),
 
     /**
      * Date change handler.
@@ -34,21 +41,51 @@ var TimePickerWindows = React.createClass({
      * The first and only argument is a Date object representing the new
      * date and time.
      */
-    onChange: React.PropTypes.func,
-  },
-  getDefaultProps: function(){
-    return {
-      date: new Date(),
-    }
-  },
-  _onChange: function(event) {
-    this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
-  },
-  render: function(){
-    return <RCTTimePicker date={this.props.date} onChange={this._onChange} />
-  },
-})
+    onChange: PropTypes.func,
+  };
 
-var RCTTimePicker = requireNativeComponent('RCTTimePicker', TimePickerWindows);
+  _onChange = (event) => this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
+
+  render() {
+    return (
+      <RCTTimePicker
+        date={this.props.date}
+        onChange={this._onChange}
+      />
+    );
+  }
+}
+
+// var TimePickerWindows = React.createClass({
+//   name: 'TimePickerWindows',
+//   propTypes: {
+//     ...View.PropTypes,
+//     ...ReactNative.ViewPropTypes,
+//     /**
+//      * The currently selected date.
+//      */
+//     date: React.PropTypes.instanceOf(Date),
+//
+//     /**
+//      * Date change handler.
+//      *
+//      * This is called when the user changes the date or time in the UI.
+//      * The first and only argument is a Date object representing the new
+//      * date and time.
+//      */
+//     onChange: React.PropTypes.func,
+//   },
+//   getDefaultProps: function(){
+//     return {
+//       date: new Date(),
+//     }
+//   },
+//   _onChange: function(event) {
+//     this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
+//   },
+//   render: function(){
+//     return <RCTTimePicker date={this.props.date} onChange={this._onChange} />
+//   },
+// })
 
 module.exports = TimePickerWindows;
