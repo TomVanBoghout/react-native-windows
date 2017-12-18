@@ -46,46 +46,20 @@ class TimePickerWindows extends React.Component {
 
   _onChange = (event) => this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
 
+  newTime = () => {
+    const newTime = new Date(this.props.date);
+    newTime.setHours(newTime.getHours() - (newTime.getTimezoneOffset()/60));
+    return newTime;
+  }
+
   render() {
     return (
       <RCTTimePicker
-        date={this.props.date}
+        date={this.newTime()}
         onChange={this._onChange}
       />
     );
   }
 }
-
-// var TimePickerWindows = React.createClass({
-//   name: 'TimePickerWindows',
-//   propTypes: {
-//     ...View.PropTypes,
-//     ...ReactNative.ViewPropTypes,
-//     /**
-//      * The currently selected date.
-//      */
-//     date: React.PropTypes.instanceOf(Date),
-//
-//     /**
-//      * Date change handler.
-//      *
-//      * This is called when the user changes the date or time in the UI.
-//      * The first and only argument is a Date object representing the new
-//      * date and time.
-//      */
-//     onChange: React.PropTypes.func,
-//   },
-//   getDefaultProps: function(){
-//     return {
-//       date: new Date(),
-//     }
-//   },
-//   _onChange: function(event) {
-//     this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
-//   },
-//   render: function(){
-//     return <RCTTimePicker date={this.props.date} onChange={this._onChange} />
-//   },
-// })
 
 module.exports = TimePickerWindows;
