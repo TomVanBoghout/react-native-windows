@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -110,6 +115,17 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Sets a tooltip for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="tooltip">String to display in the tooltip.</param>
+        [ReactProp("tooltip")]
+        public void SetTooltip(TFrameworkElement view, string tooltip)
+        {
+            ToolTipService.SetToolTip(view, tooltip);
         }
 
         /// <summary>
